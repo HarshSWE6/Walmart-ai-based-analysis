@@ -8,20 +8,16 @@ from sqlalchemy.engine import URL
 # Configuration
 # ----------------------------
 
-GROQ_API_KEY = "YOUR_GROQ_API_KEY"
+try:
+    GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
+except (KeyError, FileNotFoundError):
+    st.error("Please configure the GROQ_API_KEY in Streamlit Secrets!")
+    st.stop()
 
 client = Groq(api_key=GROQ_API_KEY)
 
-url = URL.create(
-    drivername="mysql+pymysql",
-    username="root",
-    password="YOUR_DB_PASSWORD",
-    host="127.0.0.1",
-    port=3306,
-    database="walmartsales"
-)
-
-engine = create_engine(url)
+# Use SQLite for easy deployment without a live database server
+engine = create_engine("sqlite:///walmartsales.db")
 
 # ----------------------------
 # Page
@@ -44,7 +40,7 @@ question = st.text_input(
 
 if st.button("Ask AI", use_container_width=True):
     prompt = f"""
-You are an expert MySQL developer.
+You are an expert SQLite developer.
 
 Database: walmartsales
 
@@ -78,7 +74,7 @@ Rules:
 1. Return ONLY SQL.
 2. Never invent column names.
 3. Always use Weekly_Sales (NOT Sales).
-4. Use MySQL syntax only.
+4. Use SQLite syntax only.
 
 Question:
 {question}
