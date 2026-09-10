@@ -17,21 +17,23 @@ import plotly.graph_objects as go
 engine = create_engine("sqlite:///walmartsales.db")
 
 
+import os
+
+
 def _get_api_keys():
-    """Retrieve primary and fallback Groq API keys."""
+    """Retrieve primary and fallback Groq API keys from st.secrets or os.environ."""
     keys = []
-    try:
-        keys.append(st.secrets["GROQ_API_KEY"])
-    except (KeyError, FileNotFoundError):
-        pass
-    try:
-        keys.append(st.secrets["GROQ_API_KEY_FALLBACK"])
-    except (KeyError, FileNotFoundError):
-        pass
+    for key_name in ["GROQ_API_KEY", "GROQ_API_KEY_FALLBACK"]:
+        try:
+            keys.append(st.secrets[key_name])
+        except (KeyError, FileNotFoundError):
+            val = os.environ.get(key_name)
+            if val:
+                keys.append(val)
     if not keys:
         st.error(
             "**No GROQ API keys configured.** "
-            "Add them to `.streamlit/secrets.toml` — e.g. `GROQ_API_KEY = \"gsk_...\"`"
+            "Add them to `.streamlit/secrets.toml` or set as environment variables."
         )
     return keys
 
