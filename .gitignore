@@ -41,3 +41,6 @@ venv.bak/
 # Data
 # uncomment the following if you want to ignore data files
 # data/raw/
+
+# Streamlit secrets (API keys)
+.streamlit/secrets.toml
