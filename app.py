@@ -761,97 +761,101 @@ def render_plotly_visualization(df, chart_type="Auto"):
 
     fig = None
 
-    if selected_chart == "Line Trend" and num_cols:
-        x_col = date_cols[0] if date_cols else (cat_cols[0] if cat_cols else df.index)
-        y_col = num_cols[0]
-        
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(
-            x=df[x_col], y=df[y_col],
-            mode='lines+markers',
-            name=y_col.replace('_', ' '),
-            line=dict(color='#0071DC', width=3, shape='spline'),
-            marker=dict(size=6, color='#FFC220', symbol='circle'),
-            fill='tozeroy',
-            fillcolor='rgba(0, 113, 220, 0.15)'
-        ))
-        
-        if len(num_cols) > 1:
+    try:
+        if selected_chart == "Line Trend" and num_cols:
+            x_col = date_cols[0] if date_cols else (cat_cols[0] if cat_cols else df.index)
+            y_col = num_cols[0]
+            
+            fig = go.Figure()
             fig.add_trace(go.Scatter(
-                x=df[x_col], y=df[num_cols[1]],
+                x=df[x_col], y=df[y_col],
                 mode='lines+markers',
-                name=num_cols[1].replace('_', ' '),
-                line=dict(color='#10B981', width=2, dash='dash'),
-                marker=dict(size=5, color='#34D399')
+                name=y_col.replace('_', ' '),
+                line=dict(color='#0071DC', width=3, shape='spline'),
+                marker=dict(size=6, color='#FFC220', symbol='circle'),
+                fill='tozeroy',
+                fillcolor='rgba(0, 113, 220, 0.15)'
             ))
-        fig.update_layout(title=dict(text=f"📈 Historical Trend Analysis: {y_col.replace('_', ' ')}", font=dict(color='#F8FAFC', size=15)))
+            
+            if len(num_cols) > 1:
+                fig.add_trace(go.Scatter(
+                    x=df[x_col], y=df[num_cols[1]],
+                    mode='lines+markers',
+                    name=num_cols[1].replace('_', ' '),
+                    line=dict(color='#10B981', width=2, dash='dash'),
+                    marker=dict(size=5, color='#34D399')
+                ))
+            fig.update_layout(title=dict(text=f"📈 Historical Trend Analysis: {y_col.replace('_', ' ')}", font=dict(color='#F8FAFC', size=15)))
 
-    elif selected_chart == "Bar Chart" and num_cols:
-        x_col = cat_cols[0] if cat_cols else df.columns[0]
-        y_col = num_cols[0]
-        
-        df_sorted = df.sort_values(by=y_col, ascending=False).head(20)
-        
-        fig = px.bar(
-            df_sorted,
-            x=x_col,
-            y=y_col,
-            color=y_col,
-            color_continuous_scale=['#004F9A', '#0071DC', '#38BDF8', '#FFC220'],
-            text_auto='.2s'
-        )
-        fig.update_traces(
-            textposition='outside',
-            marker=dict(line=dict(width=1, color='rgba(255, 255, 255, 0.2)'))
-        )
-        fig.update_layout(
-            coloraxis_showscale=False,
-            title=dict(text=f"📊 Revenue & Metrics Ranking by {x_col.replace('_', ' ')}", font=dict(color='#F8FAFC', size=15))
-        )
+        elif selected_chart == "Bar Chart" and num_cols:
+            x_col = cat_cols[0] if cat_cols else df.columns[0]
+            y_col = num_cols[0]
+            
+            df_sorted = df.sort_values(by=y_col, ascending=False).head(20)
+            
+            fig = px.bar(
+                df_sorted,
+                x=x_col,
+                y=y_col,
+                color=y_col,
+                color_continuous_scale=['#004F9A', '#0071DC', '#38BDF8', '#FFC220'],
+                text_auto='.2s'
+            )
+            fig.update_traces(
+                textposition='outside',
+                marker=dict(line=dict(width=1, color='rgba(255, 255, 255, 0.2)'))
+            )
+            fig.update_layout(
+                coloraxis_showscale=False,
+                title=dict(text=f"📊 Revenue & Metrics Ranking by {x_col.replace('_', ' ')}", font=dict(color='#F8FAFC', size=15))
+            )
 
-    elif selected_chart == "Donut Chart" and num_cols:
-        names_col = cat_cols[0] if cat_cols else df.columns[0]
-        values_col = num_cols[0]
-        
-        fig = px.pie(
-            df,
-            names=names_col,
-            values=values_col,
-            hole=0.5,
-            color_discrete_sequence=['#0071DC', '#10B981', '#FFC220', '#A855F7', '#06B6D4', '#F43F5E']
-        )
-        fig.update_traces(
-            textinfo='percent+label',
-            pull=[0.05, 0, 0, 0],
-            marker=dict(line=dict(color='#0E1626', width=2))
-        )
-        fig.update_layout(
-            title=dict(text=f"🍩 Revenue Share Distribution by {names_col.replace('_', ' ')}", font=dict(color='#F8FAFC', size=15))
-        )
+        elif selected_chart == "Donut Chart" and num_cols:
+            names_col = cat_cols[0] if cat_cols else df.columns[0]
+            values_col = num_cols[0]
+            
+            fig = px.pie(
+                df,
+                names=names_col,
+                values=values_col,
+                hole=0.5,
+                color_discrete_sequence=['#0071DC', '#10B981', '#FFC220', '#A855F7', '#06B6D4', '#F43F5E']
+            )
+            fig.update_traces(
+                textinfo='percent+label',
+                pull=[0.05, 0, 0, 0],
+                marker=dict(line=dict(color='#0E1626', width=2))
+            )
+            fig.update_layout(
+                title=dict(text=f"🍩 Revenue Share Distribution by {names_col.replace('_', ' ')}", font=dict(color='#F8FAFC', size=15))
+            )
 
-    elif selected_chart == "Scatter Plot" and len(num_cols) >= 2:
-        x_col = num_cols[0]
-        y_col = num_cols[1]
-        size_col = num_cols[2] if len(num_cols) > 2 else None
-        
-        fig = px.scatter(
-            df,
-            x=x_col,
-            y=y_col,
-            size=size_col,
-            color=y_col,
-            color_continuous_scale=['#0071DC', '#FFC220', '#10B981'],
-            hover_data=cat_cols[:2] if cat_cols else None
-        )
-        fig.update_traces(marker=dict(opacity=0.8, line=dict(width=1, color='#FFFFFF')))
-        fig.update_layout(
-            coloraxis_showscale=False,
-            title=dict(text=f"🎯 Correlation Scatter: {x_col} vs {y_col}", font=dict(color='#F8FAFC', size=15))
-        )
+        elif selected_chart == "Scatter Plot" and len(num_cols) >= 2:
+            x_col = num_cols[0]
+            y_col = num_cols[1]
+            size_col = num_cols[2] if len(num_cols) > 2 else None
+            
+            fig = px.scatter(
+                df,
+                x=x_col,
+                y=y_col,
+                size=size_col,
+                color=y_col,
+                color_continuous_scale=['#0071DC', '#FFC220', '#10B981'],
+                hover_data=cat_cols[:2] if cat_cols else None
+            )
+            fig.update_traces(marker=dict(opacity=0.8, line=dict(width=1, color='#FFFFFF')))
+            fig.update_layout(
+                coloraxis_showscale=False,
+                title=dict(text=f"🎯 Correlation Scatter: {x_col} vs {y_col}", font=dict(color='#F8FAFC', size=15))
+            )
 
-    if fig:
-        fig.update_layout(**layout_theme)
-        st.plotly_chart(fig, use_container_width=True)
+        if fig:
+            fig.update_layout(**layout_theme)
+            st.plotly_chart(fig, use_container_width=True)
+    except Exception:
+        # If the chart fails to render due to mismatched data shapes, fail gracefully
+        pass
 
 
 # ----------------------------
