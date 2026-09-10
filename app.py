@@ -67,7 +67,7 @@ def _call_groq(messages, model="openai/gpt-oss-120b"):
             else:
                 raise
 
-    st.error(f"All API keys failed. Last error: {last_error}")
+    st.error("Service temporarily unavailable. Please verify API configuration or try again later.")
     return None
 
 
@@ -1118,7 +1118,7 @@ Strict Rules:
                 st.session_state.last_insight = ""
                 st.session_state.query_time = round(time.time() - start_time, 2)
                 st.markdown(
-                    f'<div class="err-card"><strong>Query Execution Error:</strong> {e}</div>',
+                    '<div class="err-card"><strong>System Notice:</strong> The requested intelligence query could not be processed at this time. Please refine your business question.</div>',
                     unsafe_allow_html=True,
                 )
 
@@ -1298,7 +1298,10 @@ with tab_explorer:
         )
 
     except Exception as ex:
-        st.error(f"Error filtering dataset: {ex}")
+        st.markdown(
+            '<div class="err-card"><strong>System Notice:</strong> Unable to filter dataset with the selected parameters. Please adjust your selection.</div>',
+            unsafe_allow_html=True,
+        )
 
 
 # ============================================================
