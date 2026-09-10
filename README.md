@@ -32,7 +32,7 @@
 
 The **Walmart Enterprise Intelligence Console** is a production-grade, boardroom-ready analytics platform built to transform raw retail sales data into actionable executive insights — using nothing but natural language.
 
-Ask a business question in plain English. The platform translates it into optimized SQL, executes against a 421,570-record data warehouse, generates interactive Plotly visualizations, and delivers an AI-powered executive briefing — all in under 2 seconds.
+Ask a business question in plain English. The platform translates it into optimized SQL, executes against a 421,570-record data warehouse, generates interactive Plotly visualizations, and delivers an AI-powered executive briefing — all in under 2 seconds. Deployed Link: https://walmart-ai-based-analysis.onrender.com
 
 ### What Makes This Special
 
