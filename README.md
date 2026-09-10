@@ -74,16 +74,38 @@ A compliance-ready tab with:
 - Verification status panel (421,570 verified records, zero nulls in financial keys)
 - System architecture documentation (Streamlit + Plotly + Groq LPU + SQLAlchemy)
 
-### 4. Categorized Sidebar Presets
+### 4. Sidebar — Most Asked Questions (One-Click Direct Access)
 
-One-click preset questions organized by domain:
+The sidebar provides **11 pre-built executive questions** organized into 4 categories. Click any question to **instantly execute** it — no typing required. The query runs immediately, generates SQL, renders the chart, and opens the executive briefing.
 
-| Category | Example Questions |
-|:---|:---|
-| 💰 **Financial & Revenue** | Top 10 stores by revenue, Monthly sales trend, Top 5 departments by sales |
-| 🏬 **Fleet & Store Types** | Sales by Store Type A/B/C, Stores exceeding $200M, Store size vs revenue |
-| 📊 **Macro & External Drivers** | Fuel Price Impact, CPI vs Weekly Sales, Unemployment Effect |
-| 🎄 **Holiday & Seasonality** | Holiday vs Non-Holiday sales, All-time highest sales week |
+#### 💰 Financial & Revenue
+| # | Question | What It Reveals |
+|:---:|:---|:---|
+| 1 | **Top 10 stores by revenue** | Highest-performing store locations ranked by total weekly revenue |
+| 2 | **Monthly sales trend** | Month-over-month revenue trajectory across all 45 stores |
+| 3 | **Top 5 departments by sales** | Best-performing merchandise categories by revenue |
+
+#### 🏬 Fleet & Store Types
+| # | Question | What It Reveals |
+|:---:|:---|:---|
+| 4 | **Sales by Store Type A/B/C** | Average weekly sales breakdown by store classification |
+| 5 | **Stores exceeding $200M** | High-volume locations surpassing the $200M revenue threshold |
+| 6 | **Store size vs revenue** | Correlation between physical store area and sales performance |
+
+#### 📊 Macro & External Drivers
+| # | Question | What It Reveals |
+|:---:|:---|:---|
+| 7 | **Fuel Price Impact** | How regional fuel costs affect weekly consumer spending |
+| 8 | **CPI vs Weekly Sales** | Relationship between inflation index and store revenue |
+| 9 | **Unemployment Effect** | Impact of regional unemployment rates on sales volume |
+
+#### 🎄 Holiday & Seasonality
+| # | Question | What It Reveals |
+|:---:|:---|:---|
+| 10 | **Holiday vs Non-Holiday** | Revenue comparison between holiday and regular weeks |
+| 11 | **All-time highest sales week** | Peak revenue week in the entire 2-year dataset |
+
+> **How it works:** Click any sidebar button → the question auto-fills → SQL is generated and executed → Plotly chart renders → Executive briefing appears — all in one click.
 
 ---
 
