@@ -270,29 +270,6 @@ walmart-ai-based-analysis/
 
 ---
 
-## ☁️ Deployment
-
-### Streamlit Community Cloud (Recommended)
-
-1. Push your repository to GitHub
-2. Go to [share.streamlit.io](https://share.streamlit.io)
-3. Connect your GitHub repository: `HarshSWE6/Walmart-ai-based-analysis`
-4. Set the main file path to `app.py`
-5. In **Advanced Settings → Secrets**, add:
-   ```toml
-   GROQ_API_KEY = "gsk_your_key_here"
-   GROQ_API_KEY_FALLBACK = "gsk_your_backup_key"
-   ```
-6. Click **Deploy** — your app will be live in ~60 seconds
-
-### Other Platforms
-
-The app is compatible with any platform that supports Streamlit:
-- **Railway** — `streamlit run app.py --server.port $PORT`
-- **Render** — Set build command to `pip install -r requirements.txt` and start command to `streamlit run app.py`
-- **Docker** — Add a `Dockerfile` with `EXPOSE 8501` and the streamlit run command
-
----
 
 ## 🔐 Security
 
